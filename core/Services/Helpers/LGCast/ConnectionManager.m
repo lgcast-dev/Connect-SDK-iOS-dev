@@ -113,12 +113,20 @@ NSString *const kCMValueRequestPowerOff = @"Request Power Off";
 }
 
 - (void)sendSetParameter:(NSDictionary *)values {
+    [self sendSetParameter:values ignoreResult:NO];
+}
+
+
+- (void)sendSetParameter:(NSDictionary *)values ignoreResult:(BOOL)ignoreResult {
     [Log infoLGCast:@"sendSetParameter"];
     
     FailureBlock failureBlock = ^(NSError *error) {
         if (error != nil) {
             [Log errorLGCast:error.localizedDescription];
-            [self callOnConnectionFailed:@"sendSetParameter failure"];
+            
+            if (!ignoreResult) {
+                [self callOnConnectionFailed:@"sendSetParameter failure"];
+            }
         }
     };
     

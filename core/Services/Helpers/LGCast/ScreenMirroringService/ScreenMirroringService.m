@@ -314,7 +314,7 @@ NSString *const kSMValueOrientationLandscape = @"landscape";
         return;
     }
     
-    [_connectionManager sendSetParameter:capability];
+    [_connectionManager sendSetParameter:capability ignoreResult:YES];
 }
 
 @end

@@ -68,6 +68,7 @@ typedef NS_ENUM(int, ServiceType) {
 - (void)subscribe;
 - (void)sendGetParameter;
 - (void)sendSetParameter:(NSDictionary *)values;
+- (void)sendSetParameter:(NSDictionary *)values ignoreResult:(BOOL)ignoreResult ;
 - (void)sendGetParameterResponse:(NSDictionary *)values;
 - (void)sendSetParameterResponse:(NSDictionary *)values;
 - (void)closeConnection;
