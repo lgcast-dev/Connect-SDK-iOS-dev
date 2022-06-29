@@ -20,27 +20,11 @@
 #import "WebOSTVService+LGCast.h"
 #import "ServiceAsyncCommand.h"
 #import "WebOSTVServiceSocketClient.h"
-#import <LGCast/LGCast-Swift.h>
 
 @implementation WebOSTVService (LGCast)
-
-NSString *const kCommandKey = @"cmd";
-NSString *const kSubscribeKey = @"subscribe";
-NSString *const kServiceKey = @"service";
-NSString *const kClientKeyKey = @"clientKey";
-NSString *const kDeviceInfoKey = @"deviceInfo";
-
-NSString *const kCommandConnect = @"CONNECT";
-NSString *const kCommandGetParameter = @"GET_PARAMETER";
-NSString *const kCommandSetParameter = @"SET_PARAMETER";
-NSString *const kCommandGetParameterResponse = @"GET_PARAMETER_RESPONSE";
-NSString *const kCommandSetParameterResponse = @"SET_PARAMETER_RESPONSE";
-NSString *const kCommandKeepAlive = @"KEEPALIVE";
-NSString *const kCommandTeardown = @"TEARDOWN";
-
 - (ServiceSubscription *)subscribeCommandWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure {
     NSURL *URL = [NSURL URLWithString:@"ssap://com.webos.service.appcasting/getCommand"];
-    NSDictionary *payload = @{ kSubscribeKey : @YES };
+    NSDictionary *payload = @{ @"subscribe" : @YES };
 
     ServiceSubscription *subscription = [self.socket addSubscribe:URL payload:payload success:success failure:failure];
 
@@ -49,80 +33,149 @@ NSString *const kCommandTeardown = @"TEARDOWN";
 
 - (ServiceSubscription *)subscribePowerStateWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure {
     NSURL *URL = [NSURL URLWithString:@"ssap://com.webos.service.tvpower/power/getPowerState"];
-    NSDictionary *payload = @{ kSubscribeKey : @YES };
+    NSDictionary *payload = @{ @"subscribe" : @YES };
 
     ServiceSubscription *subscription = [self.socket addSubscribe:URL payload:payload success:success failure:failure];
     
     return subscription;
 }
 
-- (void)sendConnectWithService:(NSString *)service success:(SuccessBlock)success failure:(FailureBlock)failure {
-    [self sendCommandWithService:service command:kCommandConnect parameter:nil successBlock:success failureBlock:failure];
-}
-
-- (void)sendGetParameterWithService:(NSString *)service success:(SuccessBlock)success failure:(FailureBlock)failure {
-    [self sendCommandWithService:service command:kCommandGetParameter parameter:nil successBlock:success failureBlock:failure];
-}
-
-- (void)sendSetParameterWithService:(NSString *)service sourceInfo:(NSDictionary *)sourceInfo deviceInfo:(NSDictionary *)deviceInfo success:(SuccessBlock)success failure:(FailureBlock)failure {
-    NSDictionary *param;
-    
-    if (deviceInfo == nil) {
-        param = @{ service: sourceInfo };
-    } else {
-        param = @{
-            service: sourceInfo,
-            kDeviceInfoKey: deviceInfo
-        };
-    }
-    
-    [self sendCommandWithService:service command:kCommandSetParameter parameter:param successBlock:success failureBlock:failure];
-}
-
-- (void)sendGetParameterResponseWithService:(NSString *)service values:(NSDictionary *)values success:(SuccessBlock)success failure:(FailureBlock)failure {
-    NSDictionary *param = @{
-        service: values
-    };
-    
-    [self sendCommandWithService:service command:kCommandGetParameterResponse parameter:param successBlock:success failureBlock:failure];
-}
-
-- (void)sendSetParameterResponseWithService:(NSString *)service values:(NSDictionary *)values success:(SuccessBlock)success failure:(FailureBlock)failure {
-    NSDictionary *param = @{
-        service: values
-    };
-    
-    [self sendCommandWithService:service command:kCommandSetParameterResponse parameter:param successBlock:success failureBlock:failure];
-}
-
-- (void)sendKeepAliveWithService:(NSString *)service success:(SuccessBlock)success failure:(FailureBlock)failure {
-    [self sendCommandWithService:service command:kCommandKeepAlive parameter:nil successBlock:success failureBlock:failure];
-}
-
-- (void)sendTeardownWithService:(NSString *)service success:(SuccessBlock)success failure:(FailureBlock)failure {
-    [self sendCommandWithService:service command:kCommandTeardown parameter:nil successBlock:success failureBlock:failure];
-}
-
-- (void)sendCommandWithService:(NSString *)service command:(NSString *)command parameter:(NSDictionary *)parameter successBlock:(SuccessBlock)success failureBlock:(FailureBlock)failure {
-    if (self.webOSTVServiceConfig == nil || self.webOSTVServiceConfig.clientKey == nil) {
-        [Log errorLGCast:@"client key is nil"];
-        return;
-    }
-    
-    NSURL *url = [NSURL URLWithString:@"ssap://com.webos.service.appcasting/sendCommand"];
-    NSDictionary *defaultPayload = @{
-        kCommandKey: command,
-        kClientKeyKey: self.webOSTVServiceConfig.clientKey,
-        kServiceKey: service
+- (void)sendConnect:(NSString*)service success:(SuccessBlock)success failure:(FailureBlock)failure {
+    NSURL *URL = [NSURL URLWithString:@"ssap://com.webos.service.appcasting/sendCommand"];
+    NSDictionary *payload = @{
+        @"cmd" : @"CONNECT",
+        @"clientKey" : [[self webOSTVServiceConfig] clientKey],
+        @"service" : service
     };
 
-    NSMutableDictionary *payload = [NSMutableDictionary dictionaryWithDictionary:defaultPayload];
-    [payload addEntriesFromDictionary: parameter];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:payload];
+
+    command.callbackComplete = success;
+    command.callbackError = failure;
+
+    [command send];
+}
+
+- (void)sendGetParameter:(NSString*)service sucess:(SuccessBlock)success failure:(FailureBlock)failure {
+    NSURL *URL = [NSURL URLWithString:@"ssap://com.webos.service.appcasting/sendCommand"];
+    NSDictionary *payload = @{
+        @"cmd" : @"GET_PARAMETER",
+        @"clientKey" : [[self webOSTVServiceConfig] clientKey],
+        @"service" : service
+    };
+
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:payload];
+
+    command.callbackComplete = success;
+    command.callbackError = failure;
+
+    [command send];
+}
+
+- (void)sendSetParameter:(NSDictionary *)sourceInfo service:(NSString *)service success:(SuccessBlock)success failure:(FailureBlock)failure {
+    NSURL *URL = [NSURL URLWithString:@"ssap://com.webos.service.appcasting/sendCommand"];
+    NSDictionary *payload = @{
+        @"cmd" : @"SET_PARAMETER",
+        @"clientKey" : [[self webOSTVServiceConfig] clientKey],
+        service : sourceInfo
+    };
+
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:payload];
+
+    command.callbackComplete = success;
+    command.callbackError = failure;
+
+    [command send];
+}
+
+- (void)sendSetParameter:(NSDictionary *)sourceInfo service:(NSString *)service deviceSpec:(NSDictionary *)deviceInfo success:(SuccessBlock)success failure:(FailureBlock)failure {
+    NSURL *URL = [NSURL URLWithString:@"ssap://com.webos.service.appcasting/sendCommand"];
+    NSDictionary *payload = @{
+        @"cmd" : @"SET_PARAMETER",
+        @"clientKey" : [[self webOSTVServiceConfig] clientKey],
+        service : sourceInfo,
+        @"deviceInfo" : deviceInfo
+    };
     
-    ServiceCommand *serviceCommand = [ServiceAsyncCommand commandWithDelegate:self.socket target:url payload:payload];
-    serviceCommand.callbackComplete = success;
-    serviceCommand.callbackError = failure;
-    [serviceCommand send];
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:payload];
+ 
+    command.callbackComplete = success;
+    command.callbackError = failure;
+
+    [command send];
+}
+
+- (void)sendGetParameterResponse:(NSDictionary *)parameter service:(NSString *)service success:(SuccessBlock)success failure:(FailureBlock)failure {
+    NSURL *URL = [NSURL URLWithString:@"ssap://com.webos.service.appcasting/sendCommand"];
+    NSDictionary *payload = @{
+        @"cmd" : @"GET_PARAMETER_RESPONSE",
+        @"clientKey" : [[self webOSTVServiceConfig] clientKey],
+        service : parameter
+    };
+    
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:payload];
+
+    command.callbackComplete = success;
+    command.callbackError = failure;
+
+    [command send];
+}
+
+
+- (void)sendSetParameterResponse:(NSDictionary *)parameter service:(NSString *)service success:(SuccessBlock)success failure:(FailureBlock)failure {
+    NSURL *URL = [NSURL URLWithString:@"ssap://com.webos.service.appcasting/sendCommand"];
+    NSDictionary *payload = @{
+        @"cmd" : @"SET_PARAMETER_RESPONSE",
+        @"clientKey" : [[self webOSTVServiceConfig] clientKey],
+        service : parameter
+    };
+    
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:payload];
+
+    command.callbackComplete = success;
+    command.callbackError = failure;
+
+    [command send];
+}
+
+- (void)sendKeepAliveWithSuccess:(SuccessBlock)success failure:(FailureBlock)failure {
+    NSURL *URL = [NSURL URLWithString:@"ssap://com.webos.service.appcasting/sendCommand"];
+    NSDictionary *payload = @{
+        @"cmd" : @"KEEPALIVE",
+        @"clientKey" : [[self webOSTVServiceConfig] clientKey]
+    };
+    
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:payload];
+    
+    command.callbackComplete = success;
+    command.callbackError = failure;
+    
+    [command send];
+}
+
+- (void)sendTeardown:(NSString*)service success:(SuccessBlock)success {
+    NSURL *URL = [NSURL URLWithString:@"ssap://com.webos.service.appcasting/sendCommand"];
+    NSDictionary *payload = @{
+        @"cmd" : @"TEARDOWN",
+        @"clientKey" : [[self webOSTVServiceConfig] clientKey],
+        @"service" : service
+    };
+    
+    ServiceCommand *command = [ServiceAsyncCommand commandWithDelegate:self.socket target:URL payload:payload];
+
+    command.callbackComplete = ^(NSDictionary *responseDic) {
+//        Log_info(@"response is %@", responseDic);
+        if (success)
+            success(nil);
+    };
+
+    command.callbackError = ^(NSError *error) {
+//        Log_info(@"error is %@", error.localizedDescription);
+        if (success)
+            success(nil);
+    };
+
+    [command send];
 }
 
 @end
