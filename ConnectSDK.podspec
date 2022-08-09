@@ -10,7 +10,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "ConnectSDK"
-  s.version      = "1.6.2"
+  s.version      = "2.0.0"
   s.summary      = "Connect SDK is an open source framework that connects your mobile apps with multiple TV platforms."
 
   s.description  = <<-DESC
@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
                     To support the aforementioned use case without Connect SDK, a developer would need to implement DIAL, ECG, Chromecast, and DLNA in their app. With Connect SDK, discovering the three devices is handled for you. Furthermore, the method calls between each protocol is abstracted. That means you can use one method call to beam a video to Roku, 3 generations of LG Smart TVs, Apple TV, and Chromecast.
                    DESC
 
-  s.homepage     = "https://connectsdk.readthedocs.io/en/latest/"
+  s.homepage     = "http://www.connectsdk.com/"
   s.license      = { :type => "Apache License, Version 2.0", :file => "LICENSE" }
   s.author             = { "Connect SDK" => "support@connectsdk.com" }
   s.social_media_url   = "http://twitter.com/ConnectSDK"
@@ -86,7 +86,7 @@ Pod::Spec.new do |s|
   non_arc_files =
     "core/Frameworks/asi-http-request/External/Reachability/*.{h,m}",
     "core/Frameworks/asi-http-request/Classes/*.{h,m}"
-    
+
   s.subspec 'Core' do |sp|
     sp.source_files  = "ConnectSDKDefaultPlatforms.h", "core/**/*.{h,m}"
     sp.exclude_files = (non_arc_files.dup << "core/ConnectSDK*Tests/**/*")
