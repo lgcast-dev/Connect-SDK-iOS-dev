@@ -1,6 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.6 (swiftlang-5.6.0.323.62 clang-1316.0.20.8)
+// swift-compiler-version: Apple Swift version 5.7 (swiftlang-5.7.0.127.4 clang-1400.0.29.50)
 // swift-module-flags: -target arm64-apple-ios11.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name LGCast
+// swift-module-flags-ignorable: -enable-bare-slash-regex
 import AVFoundation
 import AudioToolbox
 import CoreImage
@@ -15,6 +16,7 @@ import Swift
 import UIKit
 import VideoToolbox
 import _Concurrency
+import _StringProcessing
 @objc public enum LGCastCameraError : Swift.Int {
   case unknown
   case connectionClosed
@@ -217,9 +219,9 @@ import _Concurrency
 }
 @objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) public class LGCastCameraPreviewView : UIKit.UIView {
   @_Concurrency.MainActor(unsafe) @objc override dynamic public class var layerClass: Swift.AnyClass {
-    @_Concurrency.MainActor(unsafe) @objc get
+    @objc get
   }
-  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(frame: CoreFoundation.CGRect)
   @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
   @objc deinit
 }

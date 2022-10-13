@@ -6,6 +6,6 @@ framework module LGCast {
 }
 
 module LGCast.Swift {
-    header "LGCast-Swift.h"
-    requires objc
+  header "LGCast-Swift.h"
+  requires objc
 }
