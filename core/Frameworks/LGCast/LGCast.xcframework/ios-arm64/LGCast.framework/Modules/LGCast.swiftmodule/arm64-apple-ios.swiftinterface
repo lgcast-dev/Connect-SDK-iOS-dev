@@ -88,7 +88,6 @@ import _StringProcessing
   @objc public var host: Swift.String?
   @objc public var audioPort: Swift.Int
   @objc public var videoPort: Swift.Int
-  @objc public var isPortraitMode: Swift.Bool
   @objc override dynamic public init()
   @objc deinit
 }
@@ -102,6 +101,7 @@ import _StringProcessing
 @_inheritsConvenienceInitializers @objc public class LGCastMirroringVideoSettings : ObjectiveC.NSObject {
   @objc public var width: Swift.Int
   @objc public var height: Swift.Int
+  @objc public var isPortraitMode: Swift.Bool
   @objc public var framerate: Swift.Int
   @objc public var bitrate: Swift.Int
   @objc override dynamic public init()

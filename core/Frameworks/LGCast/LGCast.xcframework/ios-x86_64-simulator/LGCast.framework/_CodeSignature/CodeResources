@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/LGCast-Swift.h</key>
 		<data>
-		UsjQ2h1PyELhTnmi/Zmj2PJkSMc=
+		u8kpE0PiZ/N8H841TY87f82JBGM=
 		</data>
 		<key>Headers/LGCast.h</key>
 		<data>
@@ -18,11 +18,11 @@
 		</data>
 		<key>Modules/LGCast.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		2xIzYP+S7KVy/m9sHf/NC8JX07A=
+		2SP7gIu7MeaC8yORkEMYhFN6yic=
 		</data>
 		<key>Modules/LGCast.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		q/krir61okzlGE8zgEQfozk4Cgc=
+		aVOzTwMupkOLxRVNXVEdx2ivReo=
 		</data>
 		<key>Modules/LGCast.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
@@ -30,11 +30,11 @@
 		</data>
 		<key>Modules/LGCast.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		q/krir61okzlGE8zgEQfozk4Cgc=
+		aVOzTwMupkOLxRVNXVEdx2ivReo=
 		</data>
 		<key>Modules/LGCast.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		ZVQD5ecWqLHOsi7y1rQMQdtlejY=
+		T8Ct9mKWwiMH/QgarilW6lSM0nE=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -47,7 +47,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Lwt/9/vHgtIGsPmGuhV2UhBZT+gZO9BKqFpiHVRRKsM=
+			bQeXn6YA+DyKg1smpuPXXPkWG6iU9cUaWnyJEsV+cIU=
 			</data>
 		</dict>
 		<key>Headers/LGCast.h</key>
@@ -61,14 +61,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			lG8VG0QoHmHsCwogjB5WZYo50BjGRK1hViNZFTtDFR8=
+			RLJDnZMPvoiwjQ4kGJr5PcvTTQkgxfP3zVrSprtAKPA=
 			</data>
 		</dict>
 		<key>Modules/LGCast.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			e4TvWdeLdolsgckQRDwUyTN8K5nQMFKD0O8SJ1NnNF0=
+			zg+tHTFPbfhmGSeL9zMsohMOCbxUUGFMLxOJQCcDfkE=
 			</data>
 		</dict>
 		<key>Modules/LGCast.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
@@ -82,14 +82,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			e4TvWdeLdolsgckQRDwUyTN8K5nQMFKD0O8SJ1NnNF0=
+			zg+tHTFPbfhmGSeL9zMsohMOCbxUUGFMLxOJQCcDfkE=
 			</data>
 		</dict>
 		<key>Modules/LGCast.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			bs9AnKvZqwNXzr6YhZUN57ukZUi3BtXRKt47uEFfd0M=
+			wpqyNIAwtndv3wwL0x9w3KeXCxcnW3FH7SBvhvuarHw=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

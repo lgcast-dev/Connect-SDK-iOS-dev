@@ -416,7 +416,6 @@ SWIFT_CLASS("_TtC6LGCast20LGCastDeviceSettings")
 @property (nonatomic, copy) NSString * _Nullable host;
 @property (nonatomic) NSInteger audioPort;
 @property (nonatomic) NSInteger videoPort;
-@property (nonatomic) BOOL isPortraitMode;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -553,6 +552,7 @@ SWIFT_CLASS("_TtC6LGCast28LGCastMirroringVideoSettings")
 @interface LGCastMirroringVideoSettings : NSObject
 @property (nonatomic) NSInteger width;
 @property (nonatomic) NSInteger height;
+@property (nonatomic) BOOL isPortraitMode;
 @property (nonatomic) NSInteger framerate;
 @property (nonatomic) NSInteger bitrate;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
